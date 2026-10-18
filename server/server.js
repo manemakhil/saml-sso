@@ -1,8 +1,12 @@
 import { createServer } from 'node:http';
 
 import routeSwitcher from './routes/routes.js';
+import { SamlService } from './service/samlService.js';
 
 const server = createServer();
+
+// Initializing dependencies
+SamlService.samlEngineInit();
 
 server.on(
     'request',
