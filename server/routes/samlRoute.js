@@ -25,7 +25,7 @@ const samlCallback = async (req, res) => {
             // Pass the incoming payload directly to node-saml to run cryptographic validation checks
             const { profile } = await SamlService.samlEngine.validatePostResponseAsync(parsedBody);
 
-            console.log(profile.nameID);
+            console.log(profile);
 
             const userEmail = profile.nameID;
 
@@ -49,10 +49,6 @@ const samlCallback = async (req, res) => {
 
 const samlRouteSwitcher = async (req, res) => {
     const { fullURLObject: { pathname: routePath } } = req;
-
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Headers', 'Authorization, Content-Type');
-
 
     switch (routePath) {
         case routes.samlLogin: {

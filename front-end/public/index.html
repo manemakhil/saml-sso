@@ -1,10 +1,46 @@
-<html>
-    <head>
-        <script src="./app.js"></script>
+<!DOCTYPE html>
+<html lang="en">
 
-        <link rel="stylesheet" href="./styles.css" />
-    </head>
-    <body>
-        Hi
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAML SSO PoC Dashboard</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <h2>Enterprise SAML Log In</h2>
+
+        <!-- 🔴 State A: Logged Out Interface -->
+        <div id="logged-out-view" class="card">
+            <p>Welcome. Please authenticate via your SAML Identity Provider to access the secure area.</p>
+            <button id="login-btn" class="btn primary-btn">Log In with SAML (Auth0)</button>
+        </div>
+
+        <!-- 🟢 State B: Logged In Interface -->
+        <div id="logged-in-view" class="card" style="display: none;">
+            <div class="alert success-alert">✓ Authentication Successful! Session active.</div>
+
+            <label for="token-display">Your Internal Microservice Access Token:</label>
+            <textarea id="token-display" rows="4" readonly></textarea>
+
+            <p class="helper-text">This short-lived token is now securely held in the browser's execution memory.</p>
+
+            <div class="actions">
+                <button id="fetch-api-btn" class="btn secondary-btn">Verify Access with Protected API</button>
+                <button id="logout-btn" class="btn link-btn">Log Out</button>
+            </div>
+
+            <div id="api-response-box" style="display: none;">
+                <h4>Microservice Response Payload:</h4>
+                <pre id="api-raw-output"></pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wire up the external business logic script -->
+    <script src="/app.js"></script>
+</body>
+
 </html>
