@@ -15,9 +15,7 @@
         
         // Scrub the token instantly from the browser address history log for safety
         window.history.replaceState({}, document.title, window.location.pathname);
-        
-        loggedOutView.style.display = 'none';
-        loggedInView.style.display = 'block';
+
         tokenDisplay.value = internalAccessToken;
     }
 
@@ -26,11 +24,10 @@
     });
 
     document.getElementById('fetch-api-btn').addEventListener('click', async () => {
-        apiResponseBox.style.display = 'block';
         apiRawOutput.innerText = 'Communicating with backend mesh...';
 
         try {
-            const response = await fetch('http://localhost:8000//protectedA', {
+            const response = await fetch('http://localhost:8000/protectedA', {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${internalAccessToken}`,
@@ -38,8 +35,9 @@
                 }
             });
 
-            const data = await response.json();
-            apiRawOutput.innerText = JSON.stringify(data, null, 2);
+            const data = await response.text();
+            console.log(data)
+            apiRawOutput.innerText = data;
         } catch (error) {
             apiRawOutput.innerText = 'Network error querying downstream microservices.';
         }

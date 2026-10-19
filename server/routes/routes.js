@@ -19,13 +19,17 @@ async function routeSwitcher(req, res) {
         return;
     }
 
-    // Authetenticaion protected area
-    return authentication(req, res);
+    try {
+        // Authetenticaion protected area
+        authentication(req, res);
+    } catch (err) {
+        res.writeHead(403, { 'Content-Type': 'application/json' });
+        return res.end(err.message);
+    }
 
     if (routePath === routes.protectedPathA) {
-
-    } else if (routePath === routes.protectedPathB) {
-
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        return res.end('Authenticated!');
     }
 
     notFound(res);

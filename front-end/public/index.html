@@ -19,7 +19,7 @@
         </div>
 
         <!-- 🟢 State B: Logged In Interface -->
-        <div id="logged-in-view" class="card" style="display: none;">
+        <div id="logged-in-view" class="card">
             <div class="alert success-alert">✓ Authentication Successful! Session active.</div>
 
             <label for="token-display">Your Internal Microservice Access Token:</label>
@@ -28,11 +28,11 @@
             <p class="helper-text">This short-lived token is now securely held in the browser's execution memory.</p>
 
             <div class="actions">
-                <button id="fetch-api-btn" class="btn secondary-btn">Verify Access with Protected API</button>
+                <button id="fetch-api-btn" class="btn secondary-btn">Verify Access</button>
                 <button id="logout-btn" class="btn link-btn">Log Out</button>
             </div>
 
-            <div id="api-response-box" style="display: none;">
+            <div id="api-response-box">
                 <h4>Microservice Response Payload:</h4>
                 <pre id="api-raw-output"></pre>
             </div>

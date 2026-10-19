@@ -17,23 +17,15 @@ const authentication = (req, res) => {
 
         console.log('Authentication successful: ', decoded);
 
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        return res.end(JSON.stringify({
-            status: 'success',
-            message: 'Hello from the secure microservice engine payload!',
-            authenticatedUser: decoded.email // Sending back user info from the verified token
-        }));
-
     } catch (err) {
-        let errorMessage = 'Invalid Token Signature';
+        let errorMessage = 'Issue with Token';
         if (err.name === 'TokenExpiredError') {
             errorMessage = 'Token has expired. Please refresh your session.';
         }
 
         console.error(`JWT Verification Failed: ${err.message}`);
 
-        res.writeHead(403, { 'Content-Type': 'application/json' });
-        return res.end(JSON.stringify({ error: errorMessage }));
+        throw new Error(errorMessage);
     }
 };
 
