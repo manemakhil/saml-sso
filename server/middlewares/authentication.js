@@ -3,14 +3,19 @@ import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from '../../data/auth.js';
 
 const authentication = (req, res) => {
-    const authToken = req.headers['authorization'];
+    let token = req.headers['cookie'];
 
-    if (!authToken || !authToken.startsWith('Bearer ')) {
-        res.writeHead(401, { 'Content-Type': 'application/json' });
-        return res.end(JSON.stringify({ error: 'Access Denied: Missing or Malformed Bearer Token' }));
+    if (token === undefined) {
+        let authToken = req.headers['authorization'];
+        if (!authToken || !authToken.startsWith('Bearer ')) {
+            res.writeHead(401, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ error: 'Access Denied: Missing or Malformed Bearer Token' }));
+
+            throw new Error('Access Denied: Missing or Malformed Bearer Token');
+        }
+
+        token = authToken.split(' ')[1];
     }
-
-    const token = authToken.split(' ')[1];
 
     try {
         const decoded = jwt.verify(token, JWT_SECRET);

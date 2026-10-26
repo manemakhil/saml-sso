@@ -2,6 +2,7 @@ import { createServer } from 'node:http';
 
 import routeSwitcher from './routes/routes.js';
 import { SamlService } from './service/samlService.js';
+import { backEndURL, base, port } from './utils/routeUtil.js';
 
 const server = createServer();
 
@@ -11,7 +12,7 @@ SamlService.samlEngineInit();
 server.on(
     'request',
     async (req, res) => {
-        const fullURLObject = new URL(`http://localhost${req.url}`);
+        const fullURLObject = new URL(`${backEndURL}${req.url}`);
 
         req.fullURLObject = fullURLObject;
 
@@ -19,4 +20,4 @@ server.on(
     }
 );
 
-server.listen(8000, 'localhost', () => console.log('Listening on: http://localhost:8000'));
+server.listen(port, base, () => console.log(`Listening on: ${backEndURL}`));

@@ -5,6 +5,7 @@ import { SamlService } from "../service/samlService.js";
 import { readStreamingSAMLPOSTBody } from "../utils/requestUtils.js";
 import { notFound } from "../utils/responseUtils.js";
 import { JWT_SECRET } from '../../data/auth.js';
+import { backEndURL, frontEndURL } from '../utils/routeUtil.js';
 
 const samlLogin = async (req, res) => {
     if (req.method === 'GET') {
@@ -37,7 +38,13 @@ const samlCallback = async (req, res) => {
             );
 
             // Bounce the user back to the web portal app UI with the identity token pinned
-            res.writeHead(302, { 'Location': `http://localhost:3000?token=${internalAccessToken}` });
+            res.writeHead(
+                302,
+                {
+                    'Set-Cookie': `session_token=${internalAccessToken}; Path=/; SameSite=Lax; httpOnly`,
+                    'Location': frontEndURL
+                }
+            );
             return res.end();
         } catch (err) {
             res.writeHead(401, { 'Content-Type': 'text/plain' });

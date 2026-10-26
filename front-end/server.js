@@ -1,17 +1,22 @@
 import { createServer } from 'node:http';
 import fs from 'fs/promises';
+import baseRouteSwitcher from './routes/base.routes.js';
 
 const htmlFile = await fs.readFile('./public/index.html');
 const appJSFile = await fs.readFile('./public/app.js');
 const styleCSSFile = await fs.readFile('./public/styles.css');
 
 const server = createServer();
+const { FE_BASE, FE_PORT, FE_URL } = process.env;
 
 server.on(
     'request',
     async (req, res) => {
-        const fullURLObj = new URL(`http://localhost${req.url}`),
-            pathname = fullURLObj.pathname;
+        try {
+            await baseRouteSwitcher(req, res);
+        } catch (err) {
+            console.error(err.message);
+        }
 
         if (pathname === '/') {
             res.writeHead(200, { 'Content-Type': 'text/html' });
@@ -26,4 +31,4 @@ server.on(
     }
 );
 
-server.listen(3000, 'localhost', () => console.log('Listening on: http://localhost:3000'));
+server.listen(FE_PORT, FE_BASE, () => console.log(`Listening on: ${FE_URL}`));

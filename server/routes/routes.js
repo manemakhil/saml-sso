@@ -23,8 +23,7 @@ async function routeSwitcher(req, res) {
         // Authetenticaion protected area
         authentication(req, res);
     } catch (err) {
-        res.writeHead(403, { 'Content-Type': 'application/json' });
-        return res.end(err.message);
+        return;
     }
 
     if (routePath === routes.protectedPathA) {

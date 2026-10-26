@@ -20,19 +20,20 @@
     }
 
     document.getElementById('login-btn').addEventListener('click', () => {
-        window.location.href = 'http://localhost:8000/auth/saml/login';
+        window.location.href = 'http://127.0.0.2:8000/auth/saml/login';
     });
 
     document.getElementById('fetch-api-btn').addEventListener('click', async () => {
         apiRawOutput.innerText = 'Communicating with backend mesh...';
 
         try {
-            const response = await fetch('http://localhost:8000/protectedA', {
+            const response = await fetch('http://127.0.0.2:8000/protectedA', {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${internalAccessToken}`,
                     'Content-Type': 'application/json'
-                }
+                },
+                credentials: 'include'
             });
 
             const data = await response.text();

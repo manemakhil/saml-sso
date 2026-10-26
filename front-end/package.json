@@ -7,6 +7,9 @@
   "type": "module",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node --env-file=.env server.js"
+  },
+  "dependencies": {
+    "@node-saml/node-saml": "^5.1.0"
   }
 }

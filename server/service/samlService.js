@@ -10,7 +10,7 @@ export class SamlService {
             issuer: auth0Config.issuer,
             callbackUrl: auth0Config.callBackUrl,
             idpCert: auth0Config.idpCert,
-            acceptedClockSkewMs: auth0Config.clockSkewMs,
+            acceptedClockSkewMs: auth0Config.idpCert,
             wantAuthnResponseSigned: true,
             wantAssertionsSigned: false
         })
