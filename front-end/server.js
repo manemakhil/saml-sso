@@ -1,32 +1,24 @@
 import { createServer } from 'node:http';
-import fs from 'fs/promises';
-import baseRouteSwitcher from './routes/base.routes.js';
 
-const htmlFile = await fs.readFile('./public/index.html');
-const appJSFile = await fs.readFile('./public/app.js');
-const styleCSSFile = await fs.readFile('./public/styles.css');
+import featureRouteSwitcher from './core/http/feature.routes.js';
+import FePagesService from './features/fePages/fePages.service.js';
+import SamlService from './features/saml/saml.service.js';
 
-const server = createServer();
+// Initialisations
+await FePagesService.loadPagesIntoCache();
+SamlService.samlEngineInit();
+
+// Start the http server
 const { FE_BASE, FE_PORT, FE_URL } = process.env;
 
+const server = createServer();
 server.on(
     'request',
     async (req, res) => {
         try {
-            await baseRouteSwitcher(req, res);
+            await featureRouteSwitcher(req, res);
         } catch (err) {
             console.error(err.message);
-        }
-
-        if (pathname === '/') {
-            res.writeHead(200, { 'Content-Type': 'text/html' });
-            return res.end(htmlFile);
-        } else if (pathname === '/app.js') {
-            res.writeHead(200, { 'Content-Type': 'text/javascript' });
-            return res.end(appJSFile);
-        } else if (pathname === '/styles.css') {
-            res.writeHead(200, { 'Content-Type': 'text/css' });
-            return res.end(styleCSSFile);
         }
     }
 );
