@@ -1,4 +1,5 @@
-import { createServer } from 'node:http';
+import { createServer } from 'node:https';
+import fs from 'fs/promises';
 
 import featureRouteSwitcher from './core/http/feature.routes.js';
 import FePagesService from './features/fePages/fePages.service.js';
@@ -11,7 +12,13 @@ SamlService.samlEngineInit();
 // Start the http server
 const { FE_BASE, FE_PORT, FE_URL } = process.env;
 
-const server = createServer();
+// Loading certs
+const options = {
+    key: await fs.readFile('../data/private-key.pem'),
+    cert: await fs.readFile('../data/certificate.pem')
+}
+
+const server = createServer(options);
 server.on(
     'request',
     async (req, res) => {

@@ -12,19 +12,20 @@ export async function samlCallback(req, res) {
     try {
         const parsedBody = await readStreamingSAMLPOSTBody(req);
 
-        const internalJwtToken = SamlService.getJWTTokenAfterSamlCallback(parsedBody);
+        const internalJwtToken = await SamlService.getJWTTokenAfterSamlCallback(parsedBody);
 
+        const { FE_URL } = process.env
         res.writeHead(
             302,
             {
-                'Set-Cookie': `session_token=${internalJwtToken}; Path=/; SameSite=Lax; httpOnly`,
-                'Location': frontEndURL
+                'Set-Cookie': `session_token=${internalJwtToken}; Path=/; SameSite=None; Secure; httpOnly`,
+                'Location': FE_URL
             }
         );
 
         return res.end();
     } catch (err) {
-        res.writeHead(401, { 'Content-Type': 'text/plain' });
+    res.writeHead(401, { 'Content-Type': 'text/plain' });
         return res.end(`SAML Verification Failed: ${err.message}`);
     }
 }

@@ -3,12 +3,12 @@ import { samlCallback, samlLogin } from "./saml.controller.js";
 
 const samlRoutes = Object.freeze([
     {
-        route: new URLPattern({ pathname: '/auth/saml/login' }),
+        pattern: new URLPattern({ pathname: '/auth/saml/login' }),
         method: 'GET',
         handler: samlLogin
     },
     {
-        method: new URLPattern({ pathname: '/auth/saml/callback' }),
+        pattern: new URLPattern({ pathname: '/auth/saml/callback' }),
         method: 'POST',
         handler: samlCallback
     }

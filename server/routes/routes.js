@@ -2,7 +2,6 @@ import { routes } from '../constants/routes.js'
 import authentication from '../middlewares/authentication.js';
 import corsMiddleware from '../middlewares/cors.js';
 import { notFound } from '../utils/responseUtils.js';
-import samlRouteSwitcher from './samlRoute.js';
 
 async function routeSwitcher(req, res) {
     corsMiddleware(req, res);
@@ -14,16 +13,12 @@ async function routeSwitcher(req, res) {
         return res.end();
     }
 
-    if (routePath.startsWith(routes.samlBaseRoute)) {
-        samlRouteSwitcher(req, res);
-        return;
-    }
-
     try {
         // Authetenticaion protected area
         authentication(req, res);
     } catch (err) {
-        return;
+        res.writeHead(401, 'Error');
+        return res.end();
     }
 
     if (routePath === routes.protectedPathA) {
