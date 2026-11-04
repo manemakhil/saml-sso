@@ -14,4 +14,6 @@ export function jwtAuthentication(cookie) {
 
         return decoded;
     }
+
+    throw new Error('Cookie not present');
 }

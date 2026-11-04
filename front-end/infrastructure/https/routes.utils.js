@@ -2,7 +2,7 @@ export function routeSwitcher(routeHandlerMap, req, res) {
     const url = req.url, reqMethod = req.method;
 
     for (const { pattern, method, handler } of routeHandlerMap) {
-        if (pattern.test(url) && method !== reqMethod) {
+        if (pattern.test(url) && method === reqMethod) {
             return handler(req, res);
         }
     }
