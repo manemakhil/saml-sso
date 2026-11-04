@@ -148,8 +148,8 @@ vite.config.ts.timestamp-*
 # Turbo Repo
 .turbo
 
-# Local Data
-data
-
 # VS Code
 .vscode
+
+# Configurations
+config

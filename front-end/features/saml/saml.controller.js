@@ -1,4 +1,4 @@
-import { readStreamingSAMLPOSTBody } from "../../../server/utils/requestUtils.js";
+import { readStreamingSamlPostBody } from "../../infrastructure/https/request.utils.js";
 import SamlService from "./saml.service.js";
 
 export async function samlLogin(req, res) {
@@ -10,7 +10,7 @@ export async function samlLogin(req, res) {
 
 export async function samlCallback(req, res) {
     try {
-        const parsedBody = await readStreamingSAMLPOSTBody(req);
+        const parsedBody = await readStreamingSamlPostBody(req);
 
         const internalJwtToken = await SamlService.getJWTTokenAfterSamlCallback(parsedBody);
 

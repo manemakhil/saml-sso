@@ -1,6 +1,9 @@
 import jwt from 'jsonwebtoken';
 import { SAML } from '@node-saml/node-saml';
-import { JWT_SECRET } from '../../../data/auth.js';
+
+const {
+    JWT_SECRET
+} = process.env;
 
 class SamlService {
     static samlEngineInit() {

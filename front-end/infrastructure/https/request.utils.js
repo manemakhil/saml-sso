@@ -1,5 +1,5 @@
 export const readStreamingSamlPostBody = async request => new Promise((resolve, reject) => {
-    const samlBody = '';
+    let samlBody = '';
 
     request.on('data', chunk => samlBody += chunk.toString());
 

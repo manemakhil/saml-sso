@@ -1,4 +1,4 @@
-import { routeSwitcher } from "../../core/http/routes.utils.js";
+import { routeSwitcher } from "../../infrastructure/https/routes.utils.js";
 import { sendAppJsFile, sendHtmlFile, sendStyleCssFile } from "./fePages.controller.js";
 
 export const fePagesRoutes = Object.freeze([

@@ -1,4 +1,4 @@
-import { routeSwitcher } from "../../core/http/routes.utils.js";
+import { routeSwitcher } from "../../infrastructure/https/routes.utils.js";
 import { samlCallback, samlLogin } from "./saml.controller.js";
 
 const samlRoutes = Object.freeze([

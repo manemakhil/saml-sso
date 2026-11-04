@@ -1,9 +1,9 @@
 import { createServer } from 'node:https';
 import fs from 'fs/promises';
 
-import featureRouteSwitcher from './core/http/feature.routes.js';
 import FePagesService from './features/fePages/fePages.service.js';
 import SamlService from './features/saml/saml.service.js';
+import featureRouteSwitcher from './infrastructure/https/feature.routes.js';
 
 // Initialisations
 await FePagesService.loadPagesIntoCache();
@@ -14,8 +14,8 @@ const { FE_BASE, FE_PORT, FE_URL } = process.env;
 
 // Loading certs
 const options = {
-    key: await fs.readFile('../data/private-key.pem'),
-    cert: await fs.readFile('../data/certificate.pem')
+    key: await fs.readFile('./config/private-key.pem'),
+    cert: await fs.readFile('./config/certificate.pem')
 }
 
 const server = createServer(options);
